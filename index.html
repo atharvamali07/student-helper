@@ -43,24 +43,15 @@
     <section id="admin" class="section bg-admin">
         <h2>🔒 Admin Panel</h2>
         <p>नवीन विषय, प्रश्न किंवा नोट्सची लिंक जोडण्यासाठी खालील फॉर्म वापरा.</p>
-        
         <form class="admin-form" id="addQuestionForm" onsubmit="addContent(event)">
             <label>Subject Name:</label>
-            <input type="text" id="subjectInput" placeholder="उदा. Digital Electronics, VHDL, Signal Processing" required>
+            <input type="text" id="subjectInput" placeholder="उदा. Digital Electronics, Electronic Circuits" required>
 
-            <label>Topic / Question Title:</label>
-            <input type="text" id="topicInput" placeholder="उदा. Explain K-Map minimization with example" required>
+            <label>Link Title / Description:</label>
+            <input type="text" id="titleInput" placeholder="उदा. Unit 1 Notes / PYQ Question Bank" required>
 
-            <label>Type / Marks:</label>
-            <select id="typeInput">
-                <option value="Theory (6 Marks)">Theory (6 Marks)</option>
-                <option value="Theory (4 Marks)">Theory (4 Marks)</option>
-                <option value="MCQ / Short Note">MCQ / Short Note</option>
-                <option value="PDF Notes / Formula Sheet">PDF Notes / Formula Sheet</option>
-            </select>
-
-            <label>Google Drive / Resource Link (Optional):</label>
-            <input type="url" id="linkInput" placeholder="https://drive.google.com/file/...">
+            <label>Google Drive / Resource Link:</label>
+            <input type="url" id="linkInput" placeholder="https://drive.google.com/file/..." required>
 
             <button type="submit" class="btn btn-admin">Add Content</button>
         </form>
