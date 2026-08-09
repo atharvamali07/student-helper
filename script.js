@@ -1,41 +1,50 @@
 // Default Password for Admin Lock
 const ADMIN_PASSWORD = "admin123";
 
+// Firebase Configuration (Cloud Database)
+const firebaseConfig = {
+    databaseURL: "https://study-helper-default-rtdb.firebaseio.com/"
+};
+
+// Initialize Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+const database = firebase.database();
+
 document.addEventListener("DOMContentLoaded", () => {
     displayQuestions();
     setupAdminLock();
 });
 
-// Load stored data from LocalStorage
-function getQuestions() {
-    let questions = localStorage.getItem("studyData");
-    return questions ? JSON.parse(questions) : [];
-}
-
-// Display Content in UI
+// Fetch data from Online Database (Firebase)
 function displayQuestions() {
     let container = document.getElementById("questionContainer");
-    container.innerHTML = "";
-    let questions = getQuestions();
+    
+    database.ref("studyData").on("value", (snapshot) => {
+        container.innerHTML = "";
+        let data = snapshot.val();
 
-    if (questions.length === 0) {
-        container.innerHTML = "<p style='text-align:center; color:#64748b;'>अजून कोणताही डेटा जोडलेला नाही. Admin Panel मधून डेटा जोडा.</p>";
-        return;
-    }
+        if (!data) {
+            container.innerHTML = "<p style='text-align:center; color:#64748b;'>अजून कोणताही डेटा जोडलेला नाही. Admin Panel मधून डेटा जोडा.</p>";
+            return;
+        }
 
-    questions.forEach((item, index) => {
-        let card = document.createElement("div");
-        card.classList.add("q-card");
+        Object.keys(data).forEach((key) => {
+            let item = data[key];
+            let card = document.createElement("div");
+            card.classList.add("q-card");
 
-        let linkHTML = item.link ? `<br><a href="${item.link}" target="_blank" class="btn-link">📄 Open Drive Link (${item.title || 'View Resource'})</a>` : "";
+            let linkHTML = item.link ? `<br><a href="${item.link}" target="_blank" class="btn-link">📄 Open Drive Link (${item.title || 'View Resource'})</a>` : "";
 
-        card.innerHTML = `
-            <span class="tag">${item.subject}</span>
-            <h3>${item.title || 'Study Material'}</h3>
-            ${linkHTML}
-            <button class="delete-btn" onclick="deleteContent(${index})">Delete</button>
-        `;
-        container.appendChild(card);
+            card.innerHTML = `
+                <span class="tag">${item.subject}</span>
+                <h3>${item.title || 'Study Material'}</h3>
+                ${linkHTML}
+                <button class="delete-btn" onclick="deleteContent('${key}')">Delete</button>
+            `;
+            container.appendChild(card);
+        });
     });
 }
 
@@ -79,7 +88,7 @@ function checkPassword() {
     }
 }
 
-// Add New Link from Admin Form
+// Add New Link from Mobile/Laptop to Online Database
 function addContent(event) {
     event.preventDefault();
 
@@ -87,25 +96,26 @@ function addContent(event) {
     let title = document.getElementById("titleInput").value.trim();
     let link = document.getElementById("linkInput").value.trim();
 
-    let questions = getQuestions();
-    questions.push({ subject, title, link });
-
-    localStorage.setItem("studyData", JSON.stringify(questions));
-
-    document.getElementById("addQuestionForm").reset();
-    displayQuestions();
-    alert("नवीन Drive Link यशस्वीरीत्या जोडली गेली!");
+    // Push data to online database
+    database.ref("studyData").push({
+        subject: subject,
+        title: title,
+        link: link
+    }).then(() => {
+        document.getElementById("addQuestionForm").reset();
+        alert("नवीन Drive Link यशस्वीरीत्या जोडली गेली! सर्व उपकरणांवर दिसेल.");
+    }).catch((error) => {
+        alert("त्रुटी आली: " + error.message);
+    });
 }
 
-// Delete item with password confirmation
-function deleteContent(index) {
+// Delete item from Online Database
+function deleteContent(key) {
     let pass = prompt("डेटा डिलीट करण्यासाठी Admin Password टाका:");
     if (pass === ADMIN_PASSWORD) {
-        let questions = getQuestions();
-        questions.splice(index, 1);
-        localStorage.setItem("studyData", JSON.stringify(questions));
-        displayQuestions();
-        alert("डेटा डिलीट झाला!");
+        database.ref("studyData/" + key).remove().then(() => {
+            alert("डेटा डिलीट झाला!");
+        });
     } else if (pass !== null) {
         alert("❌ चुकीचा पासवर्ड! डिलीट करता आले नाही.");
     }
