@@ -39,6 +39,11 @@ body {
     color: #cbd5e1;
     text-decoration: none;
     font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #38bdf8;
 }
 
 .admin-link {
@@ -48,7 +53,7 @@ body {
     color: white !important;
 }
 
-/* Hero */
+/* Hero Section */
 .hero {
     background: linear-gradient(135deg, #0f172a, #1e3a8a);
     color: white;
@@ -56,10 +61,17 @@ body {
     padding: 4rem 1rem;
 }
 
-.hero h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
-.hero p { color: #94a3b8; margin-bottom: 1.5rem; }
+.hero h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
 
-/* Sections */
+.hero p {
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+}
+
+/* Section Common */
 .section {
     padding: 3rem 1.5rem;
     max-width: 900px;
@@ -67,14 +79,14 @@ body {
 }
 
 .bg-admin {
-    background-color: #fff;
+    background-color: #ffffff;
     border: 2px dashed #cbd5e1;
     border-radius: 12px;
     margin-top: 2rem;
     margin-bottom: 3rem;
 }
 
-/* Search */
+/* Search Bar */
 #searchInput {
     width: 100%;
     padding: 12px 20px;
@@ -84,7 +96,12 @@ body {
     font-size: 1rem;
 }
 
-/* Questions List */
+#searchInput:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+/* Question List & Cards */
 .question-list {
     display: flex;
     flex-direction: column;
@@ -140,7 +157,7 @@ body {
     cursor: pointer;
 }
 
-/* Admin Form */
+/* Admin Form & Lock */
 .admin-form {
     display: flex;
     flex-direction: column;
@@ -169,6 +186,23 @@ body {
 .btn-admin {
     background-color: #059669;
     margin-top: 10px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.lock-box {
+    text-align: center;
+    padding: 2rem;
+}
+
+.lock-box input {
+    padding: 10px;
+    width: 200px;
+    margin-right: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
 }
 
 footer {
