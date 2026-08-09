@@ -13,7 +13,7 @@
         <div class="logo">📚 StudyHelper</div>
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
-            <li><a href="#questions">Question Bank</a></li>
+            <li><a href="#questions">Question Bank & Notes</a></li>
             <li><a href="#admin" class="admin-link">🔒 Admin Panel</a></li>
         </ul>
     </nav>
@@ -21,27 +21,28 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <h1>Welcome to Study Helper Portal</h1>
-        <p>Access subject-wise question banks and notes added by Admin.</p>
-        <a href="#questions" class="btn">Search Question Bank</a>
+        <p>Access subject-wise question banks, formulas, and study notes in one place.</p>
+        <a href="#questions" class="btn">Explore Questions</a>
     </section>
 
-    <!-- Question Bank Section -->
+    <!-- Question Bank & Search Section -->
     <section id="questions" class="section">
-        <h2>❓ Question Bank & Notes</h2>
+        <h2>❓ Question Bank & Study Resources</h2>
+        <p>शोधण्यासाठी खालील सर्च बार वापरू शकता:</p>
         
         <!-- Search Bar -->
-        <input type="text" id="searchInput" onkeyup="filterQuestions()" placeholder="🔍 Search by Subject, Topic, or Keywords...">
+        <input type="text" id="searchInput" onkeyup="filterQuestions()" placeholder="🔍 Search topic, subject, or question (e.g. K-Map, VHDL)...">
 
-        <!-- Dynamic Content List -->
+        <!-- Container for Dynamic Data -->
         <div class="question-list" id="questionContainer">
-            <!-- Admin ने जोडलेले प्रश्न येथे दिसायला लागतील -->
+            <!-- Data will load dynamically from JavaScript -->
         </div>
     </section>
 
     <!-- Admin Panel Section -->
     <section id="admin" class="section bg-admin">
-        <h2>🔒 Admin Panel (Add Content)</h2>
-        <p>येथून तुम्ही नवीन Subject, Question किंवा PDF Drive Link जोडू शकता.</p>
+        <h2>🔒 Admin Panel</h2>
+        <p>नवीन विषय, प्रश्न किंवा नोट्सची लिंक जोडण्यासाठी खालील फॉर्म वापरा.</p>
         
         <form class="admin-form" id="addQuestionForm" onsubmit="addContent(event)">
             <label>Subject Name:</label>
@@ -50,7 +51,7 @@
             <label>Topic / Question Title:</label>
             <input type="text" id="topicInput" placeholder="उदा. Explain K-Map minimization with example" required>
 
-            <label>Type / Details:</label>
+            <label>Type / Marks:</label>
             <select id="typeInput">
                 <option value="Theory (6 Marks)">Theory (6 Marks)</option>
                 <option value="Theory (4 Marks)">Theory (4 Marks)</option>
@@ -58,15 +59,15 @@
                 <option value="PDF Notes / Formula Sheet">PDF Notes / Formula Sheet</option>
             </select>
 
-            <label>PDF / Resource Drive Link (Optional):</label>
+            <label>Google Drive / Resource Link (Optional):</label>
             <input type="url" id="linkInput" placeholder="https://drive.google.com/file/...">
 
-            <button type="submit" class="btn btn-admin">Add to Website</button>
+            <button type="submit" class="btn btn-admin">Add Content</button>
         </form>
     </section>
 
     <footer>
-        <p>© Study Helper Portal | Dynamic Content Manager</p>
+        <p>© Study Helper Portal | Designed for Quick Learning</p>
     </footer>
 
     <script src="script.js"></script>
