@@ -26,7 +26,7 @@ function displayQuestions() {
         let data = snapshot.val();
 
         if (!data) {
-            container.innerHTML = "<p style='text-align:center; color:#64748b;'>अजून कोणताही डेटा जोडलेला नाही. Admin Panel मधून डेटा जोडा.</p>";
+            container.innerHTML = "<p style='text-align:center; color:#64748b;'>No study material added yet. Please add content from Admin Panel.</p>";
             return;
         }
 
@@ -61,7 +61,7 @@ function setupAdminLock() {
     lockDiv.id = "lockBox";
     lockDiv.classList.add("lock-box");
     lockDiv.innerHTML = `
-        <p>🔑 Admin Panel वापरण्यासाठी पासवर्ड टाका:</p>
+        <p>🔑 Enter Admin Password to Access Control Panel:</p>
         <input type="password" id="passInput" placeholder="Enter Password">
         <button onclick="checkPassword()" class="btn btn-admin">Unlock</button>
         <p id="errorMsg" style="color: red; margin-top: 10px;"></p>
@@ -82,9 +82,9 @@ function checkPassword() {
     if (input === ADMIN_PASSWORD) {
         lockBox.style.display = "none";
         form.classList.remove("hidden");
-        alert("Admin Panel Unlocked!");
+        alert("Admin Panel Unlocked Successfully!");
     } else {
-        errorMsg.innerText = "❌ चुकीचा पासवर्ड! पुन्हा प्रयत्न करा.";
+        errorMsg.innerText = "❌ Incorrect Password! Please try again.";
     }
 }
 
@@ -103,21 +103,21 @@ function addContent(event) {
         link: link
     }).then(() => {
         document.getElementById("addQuestionForm").reset();
-        alert("नवीन Drive Link यशस्वीरीत्या जोडली गेली! सर्व उपकरणांवर दिसेल.");
+        alert("New Drive link added successfully! It will now be visible across all devices.");
     }).catch((error) => {
-        alert("त्रुटी आली: " + error.message);
+        alert("Error: " + error.message);
     });
 }
 
 // Delete item from Online Database
 function deleteContent(key) {
-    let pass = prompt("डेटा डिलीट करण्यासाठी Admin Password टाका:");
+    let pass = prompt("Enter Admin Password to delete this item:");
     if (pass === ADMIN_PASSWORD) {
         database.ref("studyData/" + key).remove().then(() => {
-            alert("डेटा डिलीट झाला!");
+            alert("Item deleted successfully!");
         });
     } else if (pass !== null) {
-        alert("❌ चुकीचा पासवर्ड! डिलीट करता आले नाही.");
+        alert("❌ Incorrect Password! Access denied.");
     }
 }
 
