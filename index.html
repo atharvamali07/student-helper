@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Helper Portal</title>
     <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase SDK Links for Realtime Online Storage -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
 
@@ -28,27 +32,28 @@
     <!-- Question Bank & Search Section -->
     <section id="questions" class="section">
         <h2>❓ Question Bank & Study Resources</h2>
-        <p>शोधण्यासाठी खालील सर्च बार वापरू शकता:</p>
+        <p>Use the search bar below to find relevant topics, subjects, or notes:</p>
         
         <!-- Search Bar -->
-        <input type="text" id="searchInput" onkeyup="filterQuestions()" placeholder="🔍 Search topic, subject, or question (e.g. K-Map, VHDL)...">
+        <input type="text" id="searchInput" onkeyup="filterQuestions()" placeholder="🔍 Search topic, subject, or question (e.g., Digital Electronics, Unit 1)...">
 
         <!-- Container for Dynamic Data -->
         <div class="question-list" id="questionContainer">
-            <!-- Data will load dynamically from JavaScript -->
+            <!-- Data will load dynamically from Firebase Database -->
         </div>
     </section>
 
     <!-- Admin Panel Section -->
     <section id="admin" class="section bg-admin">
         <h2>🔒 Admin Panel</h2>
-        <p>नवीन विषय, प्रश्न किंवा नोट्सची लिंक जोडण्यासाठी खालील फॉर्म वापरा.</p>
+        <p>Use the form below to add a new subject, topic, or Google Drive resource link.</p>
+        
         <form class="admin-form" id="addQuestionForm" onsubmit="addContent(event)">
             <label>Subject Name:</label>
-            <input type="text" id="subjectInput" placeholder="उदा. Digital Electronics, Electronic Circuits" required>
+            <input type="text" id="subjectInput" placeholder="e.g., Digital Electronics, Electronic Circuits" required>
 
             <label>Link Title / Description:</label>
-            <input type="text" id="titleInput" placeholder="उदा. Unit 1 Notes / PYQ Question Bank" required>
+            <input type="text" id="titleInput" placeholder="e.g., Unit 1 Notes / PYQ Question Bank" required>
 
             <label>Google Drive / Resource Link:</label>
             <input type="url" id="linkInput" placeholder="https://drive.google.com/file/..." required>
