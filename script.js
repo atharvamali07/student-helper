@@ -12,7 +12,7 @@ function getQuestions() {
     return questions ? JSON.parse(questions) : [];
 }
 
-// Display questions in the DOM
+// Display Content in UI
 function displayQuestions() {
     let container = document.getElementById("questionContainer");
     container.innerHTML = "";
@@ -27,12 +27,11 @@ function displayQuestions() {
         let card = document.createElement("div");
         card.classList.add("q-card");
 
-        let linkHTML = item.link ? `<br><a href="${item.link}" target="_blank" class="btn-link">📄 Open Notes / Drive Link</a>` : "";
+        let linkHTML = item.link ? `<br><a href="${item.link}" target="_blank" class="btn-link">📄 Open Drive Link (${item.title || 'View Resource'})</a>` : "";
 
         card.innerHTML = `
             <span class="tag">${item.subject}</span>
-            <h3>${item.topic}</h3>
-            <p>Type: ${item.type}</p>
+            <h3>${item.title || 'Study Material'}</h3>
             ${linkHTML}
             <button class="delete-btn" onclick="deleteContent(${index})">Delete</button>
         `;
@@ -45,7 +44,9 @@ function setupAdminLock() {
     let adminSection = document.getElementById("admin");
     let form = document.getElementById("addQuestionForm");
 
-    form.classList.add("hidden");
+    if (form) {
+        form.classList.add("hidden");
+    }
 
     let lockDiv = document.createElement("div");
     lockDiv.id = "lockBox";
@@ -57,7 +58,9 @@ function setupAdminLock() {
         <p id="errorMsg" style="color: red; margin-top: 10px;"></p>
     `;
 
-    adminSection.appendChild(lockDiv);
+    if (adminSection) {
+        adminSection.appendChild(lockDiv);
+    }
 }
 
 // Verify Password
@@ -76,26 +79,25 @@ function checkPassword() {
     }
 }
 
-// Add new entry from Admin Form
+// Add New Link from Admin Form
 function addContent(event) {
     event.preventDefault();
 
     let subject = document.getElementById("subjectInput").value.trim();
-    let topic = document.getElementById("topicInput").value.trim();
-    let type = document.getElementById("typeInput").value;
+    let title = document.getElementById("titleInput").value.trim();
     let link = document.getElementById("linkInput").value.trim();
 
     let questions = getQuestions();
-    questions.push({ subject, topic, type, link });
+    questions.push({ subject, title, link });
 
     localStorage.setItem("studyData", JSON.stringify(questions));
 
     document.getElementById("addQuestionForm").reset();
     displayQuestions();
-    alert("नवीन डेटा यशस्वीरीत्या जोडला गेला!");
+    alert("नवीन Drive Link यशस्वीरीत्या जोडली गेली!");
 }
 
-// Delete item
+// Delete item with password confirmation
 function deleteContent(index) {
     let pass = prompt("डेटा डिलीट करण्यासाठी Admin Password टाका:");
     if (pass === ADMIN_PASSWORD) {
@@ -109,7 +111,7 @@ function deleteContent(index) {
     }
 }
 
-// Filter / Search Logic
+// Search Filter
 function filterQuestions() {
     let input = document.getElementById("searchInput").value.toLowerCase();
     let cards = document.getElementsByClassName("q-card");
