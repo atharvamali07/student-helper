@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Helper Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">📚 StudyHelper</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#questions">Question Bank</a></li>
+            <li><a href="#admin" class="admin-link">🔒 Admin Panel</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h1>Welcome to Study Helper Portal</h1>
+        <p>Access subject-wise question banks and notes added by Admin.</p>
+        <a href="#questions" class="btn">Search Question Bank</a>
+    </section>
+
+    <!-- Question Bank Section -->
+    <section id="questions" class="section">
+        <h2>❓ Question Bank & Notes</h2>
+        
+        <!-- Search Bar -->
+        <input type="text" id="searchInput" onkeyup="filterQuestions()" placeholder="🔍 Search by Subject, Topic, or Keywords...">
+
+        <!-- Dynamic Content List -->
+        <div class="question-list" id="questionContainer">
+            <!-- Admin ने जोडलेले प्रश्न येथे दिसायला लागतील -->
+        </div>
+    </section>
+
+    <!-- Admin Panel Section -->
+    <section id="admin" class="section bg-admin">
+        <h2>🔒 Admin Panel (Add Content)</h2>
+        <p>येथून तुम्ही नवीन Subject, Question किंवा PDF Drive Link जोडू शकता.</p>
+        
+        <form class="admin-form" id="addQuestionForm" onsubmit="addContent(event)">
+            <label>Subject Name:</label>
+            <input type="text" id="subjectInput" placeholder="उदा. Digital Electronics, VHDL, Signal Processing" required>
+
+            <label>Topic / Question Title:</label>
+            <input type="text" id="topicInput" placeholder="उदा. Explain K-Map minimization with example" required>
+
+            <label>Type / Details:</label>
+            <select id="typeInput">
+                <option value="Theory (6 Marks)">Theory (6 Marks)</option>
+                <option value="Theory (4 Marks)">Theory (4 Marks)</option>
+                <option value="MCQ / Short Note">MCQ / Short Note</option>
+                <option value="PDF Notes / Formula Sheet">PDF Notes / Formula Sheet</option>
+            </select>
+
+            <label>PDF / Resource Drive Link (Optional):</label>
+            <input type="url" id="linkInput" placeholder="https://drive.google.com/file/...">
+
+            <button type="submit" class="btn btn-admin">Add to Website</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>© Study Helper Portal | Dynamic Content Manager</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
